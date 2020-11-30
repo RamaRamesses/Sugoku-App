@@ -7,6 +7,7 @@ import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 import validateSudoku from '../store/validateSudoku';
 import useTextInputHandler from '../helpers/useTextInputHandler';
+import changeTextInput from '../store/changeTextInput';
 
 export default function Board () {
   const board = useSelector(state => state.board);
@@ -34,7 +35,9 @@ export default function Board () {
     setTes(e.target.value)
   }
 
-  const { boardHandler, inputHandler } = useTextInputHandler();
+  function handleInputChange (text, x, y) {
+    dispatch(changeTextInput(board.board, text, x, y))
+  }
 
   useEffect(() => {
     dispatch(fetchByDifficulty('easy'))
@@ -55,7 +58,11 @@ export default function Board () {
                   let a = 1;
                   // console.log(rows[0][5])
                   return (
-                    <View key={x} style={styles.blocks}><TextInput keyboardType="numeric" value={rows[y][x].toString()} onChange={(event) => inputHandler(rows, event, x, y) } /></View>
+                    <View key={x} style={styles.blocks}>
+                      <TextInput keyboardType="numeric" 
+                      value={rows[y][x].toString()} 
+                      onChangeText={text => handleInputChange(text, x, y) } />
+                    </View>
                   )
                 })
               })
