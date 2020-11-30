@@ -14,8 +14,7 @@ export default function Board () {
   const status = useSelector(state => state.status);
   const dispatch = useDispatch();
 
-  function handleSolveButton () {
-    
+  function handleSolveButton () { 
     dispatch(solveSudoku(board))
     alert('Sudoku has been solved automatically!')
   }
@@ -29,22 +28,15 @@ export default function Board () {
     dispatch(fetchByDifficulty(difficulty))
   }
 
-  const [tes, setTes] = useState('1')
-
-  function handleTes (e) {
-    setTes(e.target.value)
-  }
-
   function handleInputChange (text, x, y) {
     dispatch(changeTextInput(board.board, text, x, y))
   }
 
   useEffect(() => {
-    dispatch(fetchByDifficulty('easy'))
+    dispatch(fetchEmptyBoard())
   }, [])
 
   let rows = board?.board
-  console.log(rows)
   if(!rows) return <Text>Wait</Text>
     return (
       <View>
@@ -70,7 +62,7 @@ export default function Board () {
           </View>
         </View>
         <View style={styles.buttons}>
-          <Button title="GENERATE EASY" onPress={() => generateDifficulty('easy')} />
+          <Button title="GENERATE EASY BOARD" onPress={() => generateDifficulty('easy')} />
           <Button title="Auto Solve" onPress={handleSolveButton} />
           <Button title="Validate" onPress={handleValidationButton} />
         </View>
@@ -83,6 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    maxWidth: 360
   },
   blocks: {
     height: 36,
