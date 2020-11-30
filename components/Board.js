@@ -60,7 +60,7 @@ export default function Board () {
                   return (
                     <View key={x} style={styles.blocks}>
                       <TextInput keyboardType="numeric" 
-                      value={rows[y][x].toString()} 
+                      value={blocks > 0 ? blocks.toString(): ''} 
                       onChangeText={text => handleInputChange(text, x, y) } />
                     </View>
                   )
