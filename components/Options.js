@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 
-export default function Options ({ status, board }) {
+export default function Options ({ status, board, generateDifficulty }) {
 
   const dispatch = useDispatch();
 
@@ -25,13 +25,8 @@ export default function Options ({ status, board }) {
     alert(message)
   }
 
-  function generateDifficulty (difficulty) {
-    dispatch(fetchByDifficulty(difficulty))
-  }
-
   return (
     <View style={styles.fixToText}>
-      <Button title="GENERATE EASY" onPress={() => generateDifficulty('easy')}  />
       <Button title="Auto Solve" onPress={handleSolveButton} />
       <Button title="Validate" onPress={handleValidationButton} />
     </View>

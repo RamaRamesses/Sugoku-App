@@ -5,8 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 export default function Game () {
-
-
   return (
     <View style={styles.container}>
       <Board />
