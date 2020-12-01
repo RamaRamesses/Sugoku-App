@@ -6,7 +6,6 @@ import fetchEmptyBoard from '../store/fetchEmptyBoard';
 import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 import validateSudoku from '../store/validateSudoku';
-import useTextInputHandler from '../helpers/useTextInputHandler';
 import changeTextInput from '../store/changeTextInput';
 
 export default function Board () {
@@ -20,7 +19,7 @@ export default function Board () {
   }
 
   function handleValidationButton () {
-    dispatch(validateSudoku(board));
+    console.log(status, 'status handler')
     alert(`Board status: ${status}`)
   }
 
@@ -35,6 +34,10 @@ export default function Board () {
   useEffect(() => {
     dispatch(fetchEmptyBoard())
   }, [])
+
+  useEffect(() => {
+    dispatch(validateSudoku(board))
+  }, [board])
 
   let rows = board?.board
   if(!rows) return <Text>Wait</Text>
@@ -52,7 +55,7 @@ export default function Board () {
                   return (
                     <View key={x} style={styles.blocks}>
                       <TextInput keyboardType="numeric" 
-                      value={blocks > 0 ? blocks.toString(): ''} 
+                      value={blocks > 0 ? blocks.toString() : ''} 
                       onChangeText={text => handleInputChange(text, x, y) } />
                     </View>
                   )
@@ -72,10 +75,11 @@ export default function Board () {
 
 const styles = StyleSheet.create({
   container: {
+   display: 'flex',
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: 360
+    justifyContent: 'center'
   },
   blocks: {
     height: 36,
@@ -93,7 +97,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    margin: '5%'
+    margin: '5%',
+    maxWidth: 350
   },
   buttons: {
     display: 'flex',
