@@ -28,15 +28,10 @@ export default function Board () {
   if(!rows) return <Text>Wait</Text>
     return (
       <View>
-        <View style={styles.container}>
-          <StatusBar style="auto" />
-          <Text>Sudoku</Text>
           <View style={styles.board}>
             {
               rows.map((cols, y) => {
                 return cols.map((blocks, x) => {
-                  let a = 1;
-                  // console.log(rows[0][5])
                   return (
                     <View key={x} style={styles.blocks}>
                       <TextInput keyboardType="numeric" 
@@ -48,7 +43,6 @@ export default function Board () {
               })
             }
           </View>
-        </View>
         <Options status={status} board={board} />
       </View>
     )
@@ -80,10 +74,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     margin: '5%',
     maxWidth: 350
-  },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center'
   }
 });

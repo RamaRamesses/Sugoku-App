@@ -22,7 +22,7 @@ export default function Options ({ status, board }) {
   }
 
   return (
-    <View style={styles.buttons}>
+    <View style={styles.fixToText}>
       <Button title="GENERATE EASY" onPress={() => generateDifficulty('easy')}  />
       <Button title="Auto Solve" onPress={handleSolveButton} />
       <Button title="Validate" onPress={handleValidationButton} />
@@ -35,5 +35,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center'
+  },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20
   }
 });
