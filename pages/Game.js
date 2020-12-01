@@ -17,11 +17,13 @@ export default function Game () {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+    flex: 1,
     transform: [{
-      translateY: 80
+      translateY: 0
     }],
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'black'
   }
 })

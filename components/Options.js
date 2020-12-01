@@ -14,7 +14,15 @@ export default function Options ({ status, board }) {
   }
 
   function handleValidationButton () {
-    alert(`Board status: ${status}`)
+    let message = '';
+    switch(status) {
+      case 'solved':
+        message = 'Congratulations! You have solved the sudoku!'
+      break;
+      default:
+        message = 'Validation failed! the sudoku has not been solved'
+    }
+    alert(message)
   }
 
   function generateDifficulty (difficulty) {

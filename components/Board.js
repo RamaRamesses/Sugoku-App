@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Options from './Options';
 import fetchEmptyBoard from '../store/fetchEmptyBoard';
@@ -25,7 +25,12 @@ export default function Board () {
   }, [board])
 
   let rows = board?.board
-  if(!rows) return <Text>Wait</Text>
+  if(!rows) return <ActivityIndicator size="large" color="#0000ff" 
+  style={{transform: [
+    {
+      translateY: 50
+    }
+  ]}} />
     return (
       <View>
           <View style={styles.board}>
@@ -33,11 +38,15 @@ export default function Board () {
               rows.map((cols, y) => {
                 return cols.map((blocks, x) => {
                   return (
-                    <View key={x} style={styles.blocks}>
+                    ((x > 2 && x < 6) && (y > 2 && y < 6)) || ((x < 3 || x > 5) && (y < 3 || y > 5)) ? ( <View key={x} style={styles.uniqueBlocks}>
+                    <TextInput keyboardType="numeric" 
+                    value={blocks > 0 ? blocks.toString() : ''} 
+                    onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
+                  </View> ) : ( <View key={x} style={styles.blocks}>
                       <TextInput keyboardType="numeric" 
                       value={blocks > 0 ? blocks.toString() : ''} 
-                      onChangeText={text => handleInputChange(text, x, y) } />
-                    </View>
+                      onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
+                    </View> )
                   )
                 })
               })
@@ -57,10 +66,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   blocks: {
+    backgroundColor: '#EEB736',
     height: 36,
     width: 36,
-    borderColor: 'gray',
-    borderTopWidth: 2,
+    borderColor: '#771F03',
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingTop: 5
+  },
+  uniqueBlocks: {
+    backgroundColor: '#EE7B38',
+    height: 36,
+    width: 36,
+    borderColor: '#141518',
+    borderTopWidth: 1,
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderLeftWidth: 2,
@@ -73,6 +96,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     margin: '5%',
-    maxWidth: 350
+    maxWidth: 360
   }
 });
