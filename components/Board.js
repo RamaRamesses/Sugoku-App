@@ -11,7 +11,7 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 
 
 
-export default function Board () {
+export default function Board ({navigation}) {
   const board = useSelector(state => state.board);
   const status = useSelector(state => state.status);
   const name = useSelector(state => state.name);
@@ -58,7 +58,6 @@ export default function Board () {
     return result
   }
 
-  console.log(name)
   let rows = board?.board
   if(!rows) {
   return <ActivityIndicator size="large" color="#0000ff" 
@@ -100,7 +99,7 @@ export default function Board () {
               })
             }
           </View>
-        <Options status={status} board={initialBoard} generateDifficulty={generateDifficulty} />
+        <Options navigation={navigation} status={status} board={initialBoard} generateDifficulty={generateDifficulty} />
       </View>
     )
   }

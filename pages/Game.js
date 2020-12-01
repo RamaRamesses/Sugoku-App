@@ -4,10 +4,10 @@ import Board from '../components/Board';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-export default function Game () {
+export default function Game ({ navigation }) {
   return (
     <View style={styles.container}>
-      <Board />
+      <Board navigation={navigation} />
     </View>
   )
 }

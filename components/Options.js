@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 
-export default function Options ({ status, board, generateDifficulty }) {
+export default function Options ({ status, board, generateDifficulty, navigation }) {
 
   const dispatch = useDispatch();
 
@@ -18,6 +18,7 @@ export default function Options ({ status, board, generateDifficulty }) {
     switch(status) {
       case 'solved':
         message = 'Congratulations! You have solved the sudoku!'
+        navigation.navigate('Finish')
       break;
       default:
         message = 'Validation failed! the sudoku has not been solved'

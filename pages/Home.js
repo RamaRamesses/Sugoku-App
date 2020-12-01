@@ -18,7 +18,7 @@ export default function Home ({ navigation }) {
     if (!name) {
       alert('Please enter your name.')
     } else {
-      dispatch(fetchByDifficulty('easy'))
+      dispatch(fetchByDifficulty(difficulty))
       dispatch({
         type: 'WATCH_CHANGE',
         seed: [5]
