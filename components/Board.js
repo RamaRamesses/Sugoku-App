@@ -2,9 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import Options from './Options';
 import fetchEmptyBoard from '../store/fetchEmptyBoard';
-import fetchByDifficulty from '../store/fetchByDifficulty';
-import solveSudoku from '../store/solveSudoku';
 import validateSudoku from '../store/validateSudoku';
 import changeTextInput from '../store/changeTextInput';
 
@@ -12,20 +11,6 @@ export default function Board () {
   const board = useSelector(state => state.board);
   const status = useSelector(state => state.status);
   const dispatch = useDispatch();
-
-  function handleSolveButton () { 
-    dispatch(solveSudoku(board))
-    alert('Sudoku has been solved automatically!')
-  }
-
-  function handleValidationButton () {
-    console.log(status, 'status handler')
-    alert(`Board status: ${status}`)
-  }
-
-  function generateDifficulty (difficulty) {
-    dispatch(fetchByDifficulty(difficulty))
-  }
 
   function handleInputChange (text, x, y) {
     dispatch(changeTextInput(board.board, text, x, y))
@@ -64,11 +49,7 @@ export default function Board () {
             }
           </View>
         </View>
-        <View style={styles.buttons}>
-          <Button title="GENERATE EASY BOARD" onPress={() => generateDifficulty('easy')} />
-          <Button title="Auto Solve" onPress={handleSolveButton} />
-          <Button title="Validate" onPress={handleValidationButton} />
-        </View>
+        <Options status={status} board={board} />
       </View>
     )
 }
@@ -103,6 +84,6 @@ const styles = StyleSheet.create({
   buttons: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'center'
   }
 });
