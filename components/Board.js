@@ -74,7 +74,7 @@ export default function Board ({navigation}) {
 
   let rows = board?.board
   if(!rows) {
-  return <ActivityIndicator size="large" color="#0000ff" 
+  return <ActivityIndicator size="large" color="#EEB736" 
   style={{transform: [
     {
       translateY: 0
