@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import { Button, StyleSheet, View, TextInput } from 'react-native';
+import RadioForm, { RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import { RadioButton, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import getUserName from '../store/getUserName';
 import fetchByDifficulty from '../store/fetchByDifficulty';
@@ -17,6 +18,8 @@ export default function Home ({ navigation }) {
   function handlePlayButton () {
     if (!name) {
       alert('Please enter your name.')
+    } else if (!difficulty) {
+      alert('Please select difficulty.')
     } else {
       dispatch(fetchByDifficulty(difficulty))
       dispatch({
@@ -44,7 +47,7 @@ export default function Home ({ navigation }) {
           <RadioForm
             style={{marginTop: 10, justifyContent: 'center'}}
             radio_props={radio_props}
-            initial={0}
+            initial={-1}
             buttonColor={'#EEB736'}
             selectedButtonColor={'#EEB736'}
             selectedLabelColor={'#EEB736'}
@@ -57,7 +60,7 @@ export default function Home ({ navigation }) {
         </View>
       </View>
       <View style={styles.buttons}>
-          <Button title="PLAY" onPress={handlePlayButton} />
+          <Button title="PLAY" onPress={handlePlayButton} color="orange" />
       </View>
     </View>
   )

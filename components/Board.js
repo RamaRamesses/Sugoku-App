@@ -63,7 +63,7 @@ export default function Board ({navigation}) {
   return <ActivityIndicator size="large" color="#0000ff" 
   style={{transform: [
     {
-      translateY: 50
+      translateY: 0
     }
   ]}} /> } else {
     return (
@@ -75,11 +75,11 @@ export default function Board ({navigation}) {
                   if (!notEditable(y, x)) {
                     return (
                       ((x > 2 && x < 6) && (y > 2 && y < 6)) || ((x < 3 || x > 5) && (y < 3 || y > 5)) ? (
-                      <View key={x} style={[styles.blocks, styles.uniqueBlocks, {borderBottomColor: 'green', borderBottomWidth: 2.5, backgroundColor: 'darkorange'}]}>
+                      <View key={x} style={[styles.blocks, styles.uniqueBlocks, {borderBottomColor: 'green', backgroundColor: 'darkorange', textAlign: 'center', paddingLeft: 10}]}>
                         <TextInput keyboardType="numeric" 
                         value={blocks > 0 ? blocks.toString() : ''} 
                         onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
-                      </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks, {borderBottomColor: 'green', borderBottomWidth: 2, backgroundColor: '#FFD500'}]}>
+                      </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks, {borderBottomColor: 'green', backgroundColor: 'orange', textAlign: 'center', paddingLeft: 10}]}>
                         <TextInput keyboardType="numeric" 
                         value={blocks > 0 ? blocks.toString() : ''} 
                         onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
@@ -89,9 +89,9 @@ export default function Board ({navigation}) {
                     return (
                       ((x > 2 && x < 6) && (y > 2 && y < 6)) || ((x < 3 || x > 5) && (y < 3 || y > 5)) ? (
                       <View key={x} style={[styles.blocks, styles.uniqueBlocks]}>
-                        <Text style={{fontSize: 25}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', textAlign: 'center', backgroundColor: '#F7D100'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks]}>
-                        <Text style={{fontSize: 25}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', backgroundColor: '#FFD500', textAlign: 'center'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> )
                     )
                   }
@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderLeftWidth: 1,
     textAlign: 'center',
-    paddingLeft: 10,
   },
   uniqueBlocks: {
     backgroundColor: '#EE7B38',
@@ -137,5 +136,15 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     margin: '5%',
     maxWidth: 360
+  },
+  reservedBorder: {
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderTopColor: 'black',
+    borderRightColor: 'black',
+    borderBottomColor: 'black',
+    borderLeftColor: 'black',
   }
 });

@@ -28,13 +28,14 @@ export default function App() {
                 title: 'Home',
                 headerStyle: {
                   backgroundColor: '#EEB736',
-              }}} />
+                },
+                headerShown: false
+              }} />
               <Stack.Screen name="Finish" component={Finish}  
               options={{ 
                 title: 'Home',
-                headerStyle: {
-                  backgroundColor: '#EEB736',
-              }}} />
+                headerShown: false
+              }} />
           </Stack.Navigator>
       </Provider>
     </NavigationContainer>

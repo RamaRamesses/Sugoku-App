@@ -19,6 +19,10 @@ export default function Options ({ status, board, generateDifficulty, navigation
       case 'solved':
         message = 'Congratulations! You have solved the sudoku!'
         navigation.navigate('Finish')
+        dispatch({
+          type: 'FETCH_BOARD',
+          data: []
+        })
       break;
       default:
         message = 'Validation failed! the sudoku has not been solved'
@@ -28,8 +32,8 @@ export default function Options ({ status, board, generateDifficulty, navigation
 
   return (
     <View style={styles.fixToText}>
-      <Button title="Auto Solve" onPress={handleSolveButton} />
-      <Button title="Validate" onPress={handleValidationButton} />
+      <Button color="orange" title="Auto Solve" onPress={handleSolveButton} />
+      <Button color="orange" title="Validate" onPress={handleValidationButton} />
     </View>
   )
 }
