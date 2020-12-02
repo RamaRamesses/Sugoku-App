@@ -7,23 +7,25 @@ import fetchEmptyBoard from '../store/fetchEmptyBoard';
 import validateSudoku from '../store/validateSudoku';
 import changeTextInput from '../store/changeTextInput';
 import fetchByDifficulty from '../store/fetchByDifficulty'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-
-
+import CountDown from 'react-native-countdown-component';
+import { diff } from 'react-native-reanimated';
 
 export default function Board ({navigation}) {
   const board = useSelector(state => state.board);
   const status = useSelector(state => state.status);
   const name = useSelector(state => state.name);
   const watchChange = useSelector(state => state.watchChange);
+  const difficulty = useSelector(state => state.difficulty);
   const [initialBoard, setInitialBoard] = useState([]);
   const [reservedCols, setReservedCols] = useState([]);
+  let [timer, setTimer] = useState(0);
   const dispatch = useDispatch();
 
   function handleInputChange (text, x, y) {
     console.log(notEditable(y, x))
     dispatch(changeTextInput(board.board, text, x, y))
   }
+
 
   function generateDifficulty () {
     let output = [];
@@ -41,6 +43,14 @@ export default function Board ({navigation}) {
   useEffect(() => {
     if(board?.board) {
       generateDifficulty()
+      switch(difficulty) {
+        case 'easy':
+          setTimer(10)
+          break;
+        case 'medium':
+          setTimer(600);
+          break;
+      }
     }
   }, [watchChange])
 
@@ -68,6 +78,13 @@ export default function Board ({navigation}) {
   ]}} /> } else {
     return (
       <View>
+        <CountDown
+        until={600}
+        size={30}
+        onFinish={() => alert('Finished')}
+        timeToShow={['M', 'S']}
+        timeLabels={{m: 'MM', s: 'SS'}}
+      />
           <View style={styles.board}>
             {
               rows.map((cols, y) => {
@@ -89,9 +106,9 @@ export default function Board ({navigation}) {
                     return (
                       ((x > 2 && x < 6) && (y > 2 && y < 6)) || ((x < 3 || x > 5) && (y < 3 || y > 5)) ? (
                       <View key={x} style={[styles.blocks, styles.uniqueBlocks]}>
-                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', textAlign: 'center', backgroundColor: '#F7D100'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', textAlign: 'center', color: 'darkred'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks]}>
-                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', backgroundColor: '#FFD500', textAlign: 'center'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', color: 'darkred', textAlign: 'center'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> )
                     )
                   }
@@ -99,7 +116,7 @@ export default function Board ({navigation}) {
               })
             }
           </View>
-        <Options navigation={navigation} status={status} board={initialBoard} generateDifficulty={generateDifficulty} />
+        <Options navigation={navigation} status={status} board={initialBoard} />
       </View>
     )
   }
@@ -123,12 +140,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   uniqueBlocks: {
-    backgroundColor: '#EE7B38',
+    backgroundColor: 'darkorange',
     borderColor: '#141518',
   },
   regularBlocks: {
     borderColor: '#771F03',
-    backgroundColor: '#EEB736',
+    backgroundColor: 'orange',
   },
   board: {
     display: 'flex',

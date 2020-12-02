@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 
-export default function Options ({ status, board, generateDifficulty, navigation }) {
+export default function Options ({ status, board, navigation }) {
 
   const dispatch = useDispatch();
 
@@ -30,10 +30,19 @@ export default function Options ({ status, board, generateDifficulty, navigation
     alert(message)
   }
 
+  function handleGiveUpButton () {
+    navigation.navigate('Home')
+    dispatch({
+      type: 'FETCH_BOARD',
+      data: []
+    })
+  }
+
   return (
     <View style={styles.fixToText}>
       <Button color="orange" title="Auto Solve" onPress={handleSolveButton} />
       <Button color="orange" title="Validate" onPress={handleValidationButton} />
+      <Button color="orange" title="Give Up" onPress={handleGiveUpButton} />
     </View>
   )
 }

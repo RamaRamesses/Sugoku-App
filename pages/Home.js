@@ -45,7 +45,7 @@ export default function Home ({ navigation }) {
         <Text style={{color: '#EEB736', textAlign: 'center'}}>Select Difficulty: </Text>
         <View>
           <RadioForm
-            style={{marginTop: 10, justifyContent: 'center'}}
+            style={{marginTop: 15, justifyContent: 'center', marginBottom: 15}}
             radio_props={radio_props}
             initial={-1}
             buttonColor={'#EEB736'}
