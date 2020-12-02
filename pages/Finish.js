@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import Board from '../components/Board';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Finish ({ navigation }) {
   const name = useSelector(state => state.currentUser);
@@ -39,16 +40,18 @@ export default function Finish ({ navigation }) {
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.gameTitle}>Leaderboard :</Text>
-      {
-        leaderboard.map((user, i) => {
-          return (
-            <View style={styles.leaderboard} key={i}>
-              <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left'}}>{i+1}. Name: {user[0]}</Text>
-              <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left', marginBottom: 25}}>Time: Solved in {Math.abs(user[1]-600)} seconds</Text>
-            </View>
-          )
-        })
-      }
+      <ScrollView style={{marginBottom: 25}}>
+        {
+          leaderboard.map((user, i) => {
+            return (
+              <View style={styles.leaderboard} key={i}>
+                <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left'}}>{i+1}. Name: {user[0]}</Text>
+                <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left', marginBottom: 25}}>Time: Solved in {Math.abs(user[1]-600)} seconds</Text>
+              </View>
+            )
+          })
+        }
+      </ScrollView>
       <Button
         title="Back to home"
         labelC
@@ -84,9 +87,10 @@ const styles = StyleSheet.create({
       }
     ],
     justifyContent: 'center',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    padding: 50
   },
   buttons: {
     width: '50%'
-  }
+  },
 })
