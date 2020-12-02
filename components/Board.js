@@ -9,6 +9,10 @@ import changeTextInput from '../store/changeTextInput';
 import fetchByDifficulty from '../store/fetchByDifficulty'
 import CountDown from 'react-native-countdown-component';
 import { diff } from 'react-native-reanimated';
+import {
+  useFonts,
+  Gugi_400Regular,
+} from '@expo-google-fonts/gugi'
 
 export default function Board ({navigation}) {
   const board = useSelector(state => state.board);
@@ -26,6 +30,9 @@ export default function Board ({navigation}) {
     dispatch(changeTextInput(board.board, text, x, y))
   }
 
+  let [fontsLoaded] = useFonts({
+    Gugi_400Regular,
+  });
 
   function generateDifficulty () {
     let output = [];
@@ -93,20 +100,20 @@ export default function Board ({navigation}) {
                       <View key={x} style={[styles.blocks, styles.uniqueBlocks, {borderBottomColor: 'green', backgroundColor: 'darkorange', textAlign: 'center', paddingLeft: 10}]}>
                         <TextInput keyboardType="numeric" 
                         value={blocks > 0 ? blocks.toString() : ''} 
-                        onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
+                        onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25, fontFamily: 'Gugi_400Regular'}} />
                       </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks, {borderBottomColor: 'green', backgroundColor: 'orange', textAlign: 'center', paddingLeft: 10}]}>
                         <TextInput keyboardType="numeric" 
                         value={blocks > 0 ? blocks.toString() : ''} 
-                        onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25}} />
+                        onChangeText={text => handleInputChange(text, x, y) } style={{fontSize: 25, fontFamily: 'Gugi_400Regular'}} />
                       </View> )
                     )
                   } else {
                     return (
                       ((x > 2 && x < 6) && (y > 2 && y < 6)) || ((x < 3 || x > 5) && (y < 3 || y > 5)) ? (
                       <View key={x} style={[styles.blocks, styles.uniqueBlocks]}>
-                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', textAlign: 'center', color: 'darkred'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontFamily: 'Gugi_400Regular', fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', textAlign: 'center', color: 'darkred'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> ) : ( <View key={x} style={[styles.blocks, styles.regularBlocks]}>
-                        <Text style={{fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', color: 'darkred', textAlign: 'center'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
+                        <Text style={{fontFamily: 'Gugi_400Regular', fontSize: 22, maxWidth: '95%', maxHeight:'95%', margin: '5%', color: 'darkred', textAlign: 'center'}}>{blocks > 0 ? blocks.toString() : ''}</Text>
                       </View> )
                     )
                   }

@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, ActivityIndicator } from 'react-native';
 import Board from '../components/Board';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
+import {
+  useFonts,
+  Gugi_400Regular,
+} from '@expo-google-fonts/gugi'
 
 export default function Finish ({ navigation }) {
   const name = useSelector(state => state.currentUser);
   const users = useSelector(state => state.leaderboard);
   let leaderboard = [];
+  let [fontsLoaded] = useFonts({
+    Gugi_400Regular,
+  });
 
   function displayLeaderboard () {
     for(let props in users) {
@@ -37,6 +44,12 @@ export default function Finish ({ navigation }) {
     navigation.navigate('Home')
   }
 
+  if(!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" 
+  style={{transform: [
+    {
+      translateY: 0
+    }
+  ]}} />
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.gameTitle}>Leaderboard :</Text>
@@ -45,8 +58,8 @@ export default function Finish ({ navigation }) {
           leaderboard.map((user, i) => {
             return (
               <View style={styles.leaderboard} key={i}>
-                <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left'}}>{i+1}. Name: {user[0]}</Text>
-                <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left', marginBottom: 25}}>Time: Solved in {Math.abs(user[1]-600)} seconds</Text>
+                <Text style={{color: '#EEB736', fontSize: 20, textAlign: 'left', marginBottom: 5, fontFamily: 'Gugi_400Regular'}}>{i+1}. Name: {user[0]}</Text>
+                <Text style={{color: 'yellow', fontSize: 20, textAlign: 'left', marginBottom: 25,fontFamily: 'Gugi_400Regular'}}>Time: Solved in {Math.abs(user[1]-600)} seconds</Text>
               </View>
             )
           })
@@ -68,8 +81,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
     fontSize: 35,
     marginBottom: 25,
-    color: '#EEB736',
-    fontFamily: 'Roboto',
+    color: 'orange',
+    fontFamily: 'Gugi_400Regular',
     textAlign: 'left'
   },
   leaderboard: {

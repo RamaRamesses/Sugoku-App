@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, View, TextInput } from 'react-native';
+import { Button, StyleSheet, View, TextInput, ActivityIndicator } from 'react-native';
 import RadioForm, { RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { RadioButton, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import getUserName from '../store/getUserName';
 import fetchByDifficulty from '../store/fetchByDifficulty';
+import {
+  useFonts,
+  Gugi_400Regular,
+} from '@expo-google-fonts/gugi'
 
 let radio_props = [
   { label: 'Easy', value: 'easy' },
@@ -12,6 +16,10 @@ let radio_props = [
   { label: 'Hard', value: 'hard' }
 ]
 export default function Home ({ navigation }) {
+  let [fontsLoaded] = useFonts({
+    Gugi_400Regular,
+  });
+
   const [difficulty, setDifficulty] = useState('');
   const [name, setName] = useState('');
   const dispatch = useDispatch();
@@ -30,22 +38,27 @@ export default function Home ({ navigation }) {
       navigation.navigate('Game');
     }
   }
-
+  if(!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" 
+  style={{transform: [
+    {
+      translateY: 0
+    }
+  ]}} />
   return (
     <View style={styles.homeContainer}>
       <Text style={styles.gameTitle}>Sugoku</Text>
       <View>
-        <Text style={{color: '#EEB736', textAlign: 'center', fontSize: 25}}>Enter your name:</Text>
+        <Text style={{color: '#EEB736', textAlign: 'center', fontSize: 25, fontFamily: 'Gugi_400Regular'}}>Enter your name:</Text>
         <TextInput
         style={{height: 40,marginBottom: 45, color: 'white', borderBottomColor: 'darkorange', borderBottomWidth: 3}}
         placeholder="Input your name here"
         value={name}
         onChangeText={(text) => setName(text)}
       />
-        <Text style={{color: '#EEB736', textAlign: 'center'}}>Select Difficulty: </Text>
+        <Text style={{color: '#EEB736', textAlign: 'center', fontFamily: 'Gugi_400Regular'}}>Select Difficulty: </Text>
         <View>
           <RadioForm
-            style={{marginTop: 15, justifyContent: 'center', marginBottom: 15}}
+            style={{marginTop: 15, justifyContent: 'center', marginBottom: 15, fontFamily: 'Gugi_400Regular'}}
             radio_props={radio_props}
             initial={-1}
             buttonColor={'#EEB736'}
@@ -72,7 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     marginBottom: 50,
     color: '#EEB736',
-    fontFamily: 'Roboto'
+    fontFamily: 'Gugi_400Regular'
   },
   homeContainer: {
     flex: 1,
@@ -86,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   buttons: {
-    width: '50%'
+    width: '50%',
+    fontFamily: 'Gugi_400Regular'
   }
 })
