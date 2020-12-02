@@ -18,7 +18,7 @@ export default function Board ({navigation}) {
   const difficulty = useSelector(state => state.difficulty);
   const [initialBoard, setInitialBoard] = useState([]);
   const [reservedCols, setReservedCols] = useState([]);
-  let [timer, setTimer] = useState(0);
+  let [timer, setTimer] = useState(600);
   const dispatch = useDispatch();
 
   function handleInputChange (text, x, y) {
@@ -43,14 +43,6 @@ export default function Board ({navigation}) {
   useEffect(() => {
     if(board?.board) {
       generateDifficulty()
-      switch(difficulty) {
-        case 'easy':
-          setTimer(10)
-          break;
-        case 'medium':
-          setTimer(600);
-          break;
-      }
     }
   }, [watchChange])
 
@@ -68,6 +60,11 @@ export default function Board ({navigation}) {
     return result
   }
 
+  function handleTimeout () {
+    alert('Time out! Too bad you havent validate yet, go ahead and try again!')
+    navigation.navigate('Home')
+  }
+
   let rows = board?.board
   if(!rows) {
   return <ActivityIndicator size="large" color="#0000ff" 
@@ -79,9 +76,10 @@ export default function Board ({navigation}) {
     return (
       <View>
         <CountDown
-        until={600}
+        until={timer}
         size={30}
-        onFinish={() => alert('Finished')}
+        onChange={(time) => setTimer(time)}
+        onFinish={handleTimeout}
         timeToShow={['M', 'S']}
         timeLabels={{m: 'MM', s: 'SS'}}
       />
@@ -116,7 +114,7 @@ export default function Board ({navigation}) {
               })
             }
           </View>
-        <Options navigation={navigation} status={status} board={initialBoard} />
+        <Options navigation={navigation} status={status} board={initialBoard} time={timer} />
       </View>
     )
   }

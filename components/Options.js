@@ -4,9 +4,10 @@ import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import fetchByDifficulty from '../store/fetchByDifficulty';
 import solveSudoku from '../store/solveSudoku';
 
-export default function Options ({ status, board, navigation }) {
+export default function Options ({ status, board, navigation, time }) {
 
   const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.currentUser)
 
   function handleSolveButton () { 
     dispatch(solveSudoku(board))
@@ -19,9 +20,15 @@ export default function Options ({ status, board, navigation }) {
       case 'solved':
         message = 'Congratulations! You have solved the sudoku!'
         navigation.navigate('Finish')
+        console.log(time)
         dispatch({
           type: 'FETCH_BOARD',
           data: []
+        })
+        dispatch({
+          type: 'SET_SCORE',
+          user: currentUser,
+          score: time
         })
       break;
       default:
